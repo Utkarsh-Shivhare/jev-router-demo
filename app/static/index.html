@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Support Router - Jev vs LLM Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 2rem;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .input-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .examples {
+            margin-bottom: 1rem;
+        }
+        
+        .example-btn {
+            background: #f0f0f0;
+            border: none;
+            padding: 0.5rem 1rem;
+            margin: 0.25rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+        
+        .example-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+        
+        textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        button {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .btn-jev {
+            background: #10b981;
+            color: white;
+        }
+        
+        .btn-jev:hover {
+            background: #059669;
+        }
+        
+        .btn-llm {
+            background: #3b82f6;
+            color: white;
+        }
+        
+        .btn-llm:hover {
+            background: #2563eb;
+        }
+        
+        .btn-compare {
+            background: #8b5cf6;
+            color: white;
+        }
+        
+        .btn-compare:hover {
+            background: #7c3aed;
+        }
+        
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .results {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .result-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .result-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .result-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+        
+        .badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .badge-jev {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        
+        .badge-llm {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+        
+        .metric {
+            margin: 0.75rem 0;
+        }
+        
+        .metric-label {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-bottom: 0.25rem;
+        }
+        
+        .metric-value {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #111827;
+        }
+        
+        .category {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: #667eea;
+            color: white;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: #6b7280;
+        }
+        
+        .error {
+            background: #fee2e2;
+            color: #991b1b;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+        
+        .workflow {
+            background: #f9fafb;
+            padding: 1rem;
+            border-radius: 6px;
+            margin-top: 1rem;
+            font-size: 0.875rem;
+            color: #4b5563;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🤖 AI Support Router Demo</h1>
+            <p class="subtitle">Compare Jev (TypeSafe AI) vs Traditional LLM for support ticket routing</p>
+            <p style="margin-top: 0.5rem; font-size: 0.9rem; opacity: 0.85;">
+                <strong>Models:</strong> Jev (<code>typesafe/jev-router</code>) vs LLM (<code>gpt-4o-mini</code>) | Both via OpenRouter
+            </p>
+        </header>
+        
+        <div class="input-card">
+            <div class="examples">
+                <strong>Quick examples:</strong><br>
+                <button class="example-btn" onclick="setExample('My order arrived damaged and I want a refund.')">Refund</button>
+                <button class="example-btn" onclick="setExample('Where is my package? It hasn\'t arrived yet.')">Order Status</button>
+                <button class="example-btn" onclick="setExample('I was charged twice for the same order.')">Billing</button>
+                <button class="example-btn" onclick="setExample('The app keeps crashing when I try to checkout.')">Technical</button>
+                <button class="example-btn" onclick="setExample('How do I change my account details?')">General</button>
+            </div>
+            
+            <textarea id="message" placeholder="Enter a customer support message...">My order arrived damaged and I want a refund.</textarea>
+            
+            <div class="button-group">
+                <button class="btn-jev" onclick="routeWithJev()">Route with Jev</button>
+                <button class="btn-llm" onclick="routeWithLLM()">Route with LLM</button>
+                <button class="btn-compare" onclick="routeCompare()">Compare Both</button>
+            </div>
+        </div>
+        
+        <div id="results" class="results"></div>
+    </div>
+    
+    <script>
+        function setExample(text) {
+            document.getElementById('message').value = text;
+        }
+        
+        function disableButtons(disabled) {
+            document.querySelectorAll('button').forEach(btn => {
+                btn.disabled = disabled;
+            });
+        }
+        
+        function showLoading(message = 'Routing...') {
+            document.getElementById('results').innerHTML = `
+                <div class="result-card">
+                    <div class="loading">${message}</div>
+                </div>
+            `;
+        }
+        
+        function showError(error) {
+            document.getElementById('results').innerHTML = `
+                <div class="result-card">
+                    <div class="error">
+                        <strong>Error:</strong> ${error}
+                    </div>
+                </div>
+            `;
+        }
+        
+        function renderResult(data, type) {
+            const badgeClass = type === 'jev' ? 'badge-jev' : 'badge-llm';
+            const title = type === 'jev' ? 'Jev' : 'LLM';
+            const modelName = type === 'jev' ? 'typesafe/jev-router' : 'openai/gpt-4o-mini';
+            
+            return `
+                <div class="result-card">
+                    <div class="result-header">
+                        <span class="result-title">${title}</span>
+                        <span class="badge ${badgeClass}">${data.router}</span>
+                    </div>
+                    
+                    <div style="font-size: 0.75rem; color: #6b7280; margin-bottom: 0.5rem;">
+                        Model: <code style="background: #f3f4f6; padding: 0.1rem 0.3rem; border-radius: 3px;">${modelName}</code>
+                    </div>
+                    
+                    <div class="metric">
+                        <div class="metric-label">Decision</div>
+                        <div class="metric-value">
+                            <span class="category">${data.decision.choice}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="metric">
+                        <div class="metric-label">Confidence</div>
+                        <div class="metric-value">${(data.decision.probability * 100).toFixed(1)}%</div>
+                    </div>
+                    
+                    <div class="metric">
+                        <div class="metric-label">Latency</div>
+                        <div class="metric-value">${data.latency_ms.toFixed(0)}ms</div>
+                    </div>
+                    
+                    ${data.tokens ? `
+                    <div class="metric">
+                        <div class="metric-label">Tokens</div>
+                        <div class="metric-value" style="font-size: 1rem;">
+                            ${data.tokens.prompt_tokens} in / ${data.tokens.completion_tokens} out
+                        </div>
+                    </div>
+                    ` : ''}
+                    
+                    ${data.cost ? `
+                    <div class="metric">
+                        <div class="metric-label">Cost (Actual Prices)</div>
+                        <div class="metric-value" style="font-size: 1rem; color: #059669;">
+                            $${data.cost.total_cost.toFixed(6)}
+                        </div>
+                    </div>
+                    ` : ''}
+                    
+                    <div class="workflow">
+                        <strong>Workflow:</strong> ${data.workflow}
+                    </div>
+                </div>
+            `;
+        }
+        
+        async function routeWithJev() {
+            const message = document.getElementById('message').value.trim();
+            if (!message) {
+                alert('Please enter a message');
+                return;
+            }
+            
+            disableButtons(true);
+            showLoading('Routing with Jev...');
+            
+            try {
+                const response = await fetch('/route/jev', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({message})
+                });
+                
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.detail || 'Request failed');
+                }
+                
+                const data = await response.json();
+                document.getElementById('results').innerHTML = renderResult(data, 'jev');
+            } catch (error) {
+                showError(error.message);
+            } finally {
+                disableButtons(false);
+            }
+        }
+        
+        async function routeWithLLM() {
+            const message = document.getElementById('message').value.trim();
+            if (!message) {
+                alert('Please enter a message');
+                return;
+            }
+            
+            disableButtons(true);
+            showLoading('Routing with LLM...');
+            
+            try {
+                const response = await fetch('/route/llm', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({message})
+                });
+                
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.detail || 'Request failed');
+                }
+                
+                const data = await response.json();
+                document.getElementById('results').innerHTML = renderResult(data, 'llm');
+            } catch (error) {
+                showError(error.message);
+            } finally {
+                disableButtons(false);
+            }
+        }
+        
+        async function routeCompare() {
+            const message = document.getElementById('message').value.trim();
+            if (!message) {
+                alert('Please enter a message');
+                return;
+            }
+            
+            disableButtons(true);
+            showLoading('Comparing both routers...');
+            
+            try {
+                const response = await fetch('/route/compare', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({message})
+                });
+                
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.detail || 'Request failed');
+                }
+                
+                const data = await response.json();
+                document.getElementById('results').innerHTML = 
+                    renderResult(data.jev, 'jev') + 
+                    renderResult(data.llm, 'llm');
+            } catch (error) {
+                showError(error.message);
+            } finally {
+                disableButtons(false);
+            }
+        }
+    </script>
+</body>
+</html>

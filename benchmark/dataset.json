@@ -1,0 +1,206 @@
+[
+  {
+    "message": "My order arrived damaged and I want a refund.",
+    "expected": "refund"
+  },
+  {
+    "message": "The product is broken, I need my money back.",
+    "expected": "refund"
+  },
+  {
+    "message": "I'd like to return this item for a full refund.",
+    "expected": "refund"
+  },
+  {
+    "message": "This doesn't work as advertised, please refund my purchase.",
+    "expected": "refund"
+  },
+  {
+    "message": "I want to cancel my order and get a refund.",
+    "expected": "refund"
+  },
+  {
+    "message": "Where is my package? It hasn't arrived yet.",
+    "expected": "order_status"
+  },
+  {
+    "message": "Can you tell me the status of my order?",
+    "expected": "order_status"
+  },
+  {
+    "message": "I ordered something last week but haven't received it.",
+    "expected": "order_status"
+  },
+  {
+    "message": "What's the tracking number for my shipment?",
+    "expected": "order_status"
+  },
+  {
+    "message": "My package says it was delivered but I didn't receive it.",
+    "expected": "order_status"
+  },
+  {
+    "message": "When will my order arrive?",
+    "expected": "order_status"
+  },
+  {
+    "message": "I was charged twice for the same order.",
+    "expected": "billing"
+  },
+  {
+    "message": "There's an incorrect charge on my credit card.",
+    "expected": "billing"
+  },
+  {
+    "message": "Why am I being billed monthly? I thought this was a one-time purchase.",
+    "expected": "billing"
+  },
+  {
+    "message": "Can you explain this charge on my account?",
+    "expected": "billing"
+  },
+  {
+    "message": "I need a copy of my invoice for this transaction.",
+    "expected": "billing"
+  },
+  {
+    "message": "The payment didn't go through but I was still charged.",
+    "expected": "billing"
+  },
+  {
+    "message": "The app keeps crashing when I try to checkout.",
+    "expected": "technical_support"
+  },
+  {
+    "message": "I can't log into my account, it says my password is wrong.",
+    "expected": "technical_support"
+  },
+  {
+    "message": "The website won't load properly on my browser.",
+    "expected": "technical_support"
+  },
+  {
+    "message": "I'm getting an error message: 'Connection timeout'.",
+    "expected": "technical_support"
+  },
+  {
+    "message": "The search feature isn't working correctly.",
+    "expected": "technical_support"
+  },
+  {
+    "message": "My profile picture won't upload.",
+    "expected": "technical_support"
+  },
+  {
+    "message": "How do I reset my password?",
+    "expected": "technical_support"
+  },
+  {
+    "message": "How do I change my account details?",
+    "expected": "general_support"
+  },
+  {
+    "message": "What are your business hours?",
+    "expected": "general_support"
+  },
+  {
+    "message": "Do you ship internationally?",
+    "expected": "general_support"
+  },
+  {
+    "message": "I have a question about your return policy.",
+    "expected": "general_support"
+  },
+  {
+    "message": "Can I speak to a supervisor?",
+    "expected": "general_support"
+  },
+  {
+    "message": "How do I unsubscribe from your emails?",
+    "expected": "general_support"
+  },
+  {
+    "message": "What payment methods do you accept?",
+    "expected": "general_support"
+  },
+  {
+    "message": "I received the wrong item, please send me a replacement or refund.",
+    "expected": "refund"
+  },
+  {
+    "message": "Is my order still processing or has it shipped?",
+    "expected": "order_status"
+  },
+  {
+    "message": "I see a pending charge but my order was cancelled.",
+    "expected": "billing"
+  },
+  {
+    "message": "The mobile app won't open after the latest update.",
+    "expected": "technical_support"
+  },
+  {
+    "message": "Do you have a loyalty program?",
+    "expected": "general_support"
+  },
+  {
+    "message": "This product is defective, I want a full refund immediately.",
+    "expected": "refund"
+  },
+  {
+    "message": "My tracking shows delivered but the package is nowhere to be found.",
+    "expected": "order_status"
+  },
+  {
+    "message": "Why was I charged sales tax when I live in a tax-free state?",
+    "expected": "billing"
+  },
+  {
+    "message": "I'm unable to add items to my cart.",
+    "expected": "technical_support"
+  },
+  {
+    "message": "Can I modify my shipping address?",
+    "expected": "general_support"
+  },
+  {
+    "message": "Product arrived with missing parts, need refund or replacement.",
+    "expected": "refund"
+  },
+  {
+    "message": "How long does standard shipping usually take?",
+    "expected": "order_status"
+  },
+  {
+    "message": "I was double billed, please fix this ASAP.",
+    "expected": "billing"
+  },
+  {
+    "message": "Getting '404 page not found' when clicking checkout.",
+    "expected": "technical_support"
+  },
+  {
+    "message": "What's your phone number for customer service?",
+    "expected": "general_support"
+  },
+  {
+    "message": "Never received my order, requesting full refund now.",
+    "expected": "refund"
+  },
+  {
+    "message": "Can you update me on my delivery status?",
+    "expected": "order_status"
+  },
+  {
+    "message": "I need to update my payment information on file.",
+    "expected": "billing"
+  },
+  {
+    "message": "The discount code isn't working at checkout.",
+    "expected": "technical_support"
+  },
+  {
+    "message": "How do I contact customer support?",
+    "expected": "general_support"
+  }
+]
